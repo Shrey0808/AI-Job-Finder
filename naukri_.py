@@ -5,7 +5,17 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.webdriver.chrome.options import Options
+import joblib
 import time
+import random
+
+proxies = joblib.load('proxy.lb')
+def get_random_proxy():
+    return random.choice(proxies)
+
+chrome_options = Options()
+chrome_options.add_argument('--proxy-server=%s' % get_random_proxy())
 
 PATH = r"C:\Program Files (x86)\chromedriver-win64\chromedriver.exe"
 
@@ -170,14 +180,14 @@ def naukri(job_title, location, experience):
 
 if __name__ == "__main__":
     # User input
-    job_title = 'data science'
-    location = 'Bangalore'
-    experience = 'Fresher'
-    st = time.time()
+    job_title = 'Data Science'
+    location = 'Delhi'
+    experience = '15 years'
+    start_time = time.time()
     job_listings = naukri(job_title, location, experience)
-    et = time.time()
-    print("Total Runtime :",et-st)
-    print(len(job_listings))
+    end_time = time.time()
+    print("Total Runtime:", end_time - start_time)
+    print("Total Jobs Found:", len(job_listings))
 
     # for job in job_listings:
     #     print("="*40)
