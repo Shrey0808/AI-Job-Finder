@@ -5,17 +5,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
-from selenium.webdriver.chrome.options import Options
-import joblib
 import time
-import random
 
-proxies = joblib.load('proxy.lb')
-def get_random_proxy():
-    return random.choice(proxies)
-
-chrome_options = Options()
-chrome_options.add_argument('--proxy-server=%s' % get_random_proxy())
 
 PATH = r"C:\Program Files (x86)\chromedriver-win64\chromedriver.exe"
 
