@@ -9,7 +9,7 @@ from time import sleep, time
 
 PATH = r"C:\Program Files (x86)\chromedriver-win64\chromedriver.exe"
 
-def linkedin(job_titles, locations, experience_levels):
+def linkedin(job_titles, locations, exp_lvl):
     service = Service(PATH)
     driver = webdriver.Chrome(service=service)
     driver.maximize_window()
@@ -21,7 +21,14 @@ def linkedin(job_titles, locations, experience_levels):
     # Calculate the number of pages to scrape based on the number of jobs
     jobs_per_page = 25
     pages_to_scrape = 1
-
+    if int(exp_lvl) in range(0,3):
+        experience_levels = ['Entry level']
+    elif int(exp_lvl) in range(3,6):
+        experience_levels = ['Associate']
+    elif int(exp_lvl) in range(6,11):
+        experience_levels = ['Mid-Senior level']
+    else:
+        experience_levels = ['Director']
     # Define experience level mappings
     experience_map = {
         'Internship': '1',
@@ -104,7 +111,7 @@ if __name__ == "__main__":
     # User input
     job_titles = ['Software Engineer']  # List of job titles
     locations = ['Delhi']  # List of locations
-    experience_levels = ['Entry level']  # List of experience levels
+    experience_levels = '10'  # List of experience levels
 
     start_time = time()
     job_listings = linkedin(job_titles, locations, experience_levels)

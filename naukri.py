@@ -34,7 +34,12 @@ def naukri(job_title, location, experience):
     experience_dropdown.click()
 
     # Locate the experience option using XPath with the desired experience text
-    experience_option_xpath = f'//ul[contains(@class, "dropdown")]//span[text()="{experience}"]'
+    if experience=='1':
+        experience_option_xpath = f'//ul[contains(@class, "dropdown")]//span[text()="{experience} year"]'
+    else:
+        experience_option_xpath = f'//ul[contains(@class, "dropdown")]//span[text()="{experience} years"]'
+
+
     try:
         experience_option = wait.until(EC.element_to_be_clickable((By.XPATH, experience_option_xpath)))
         experience_option.click()
@@ -122,9 +127,9 @@ def naukri(job_title, location, experience):
 
 if __name__ == "__main__":
     # User input
-    job_title = ['Data Science']
+    job_title = ['Data Science','Machine Learning']
     location = ['Banglore']
-    experience = '1 year'
+    experience = '12'
     start_time = time.time()
     job_listings = naukri(job_title, location, experience)
     end_time = time.time()

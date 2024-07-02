@@ -10,9 +10,16 @@ import time
 
 PATH = r"C:\Program Files (x86)\chromedriver-win64\chromedriver.exe"
 
-def timesjob(job_title, location, experience):
+def timesjob(job_title, location, exp):
     service = Service(PATH)
     driver = webdriver.Chrome(service=service)
+
+    if exp =='1':
+        experience = '1 year'
+    elif int(exp)>20:
+        experience = '20 years'
+    else:
+        experience = exp + ' years'
 
     driver.get("https://www.timesjobs.com/")
     
@@ -107,9 +114,9 @@ def timesjob(job_title, location, experience):
 
 if __name__ == "__main__":
     # User input
-    job_title = 'Data Science'
-    location = 'Delhi'
-    experience = '1 year'
+    job_title = ['Data Science', 'Machine Learning']
+    location = ['Delhi']
+    experience = '21'
     start_time = time.time()
     job_listings = timesjob(job_title, location, experience)
     end_time = time.time()
