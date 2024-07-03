@@ -63,13 +63,6 @@
         <div class="container-xxl py-5 bg-dark page-header mb-5">
             <div class="container my-5 pt-5 pb-4">
                 <h1 class="display-3 text-white mb-3 animated slideInDown">Job List</h1>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb text-uppercase">
-                        <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ url_for('job_list') }}">Pages</a></li>
-                        <li class="breadcrumb-item text-white active" aria-current="page">Job List</li>
-                    </ol>
-                </nav>
             </div>
         </div>
         <!-- Header End -->
@@ -123,8 +116,9 @@
                             </div>
                         </div>
                         <div class="col-md-2 d-flex flex-column">
-                            <button class="btn btn-dark border-0 mb-2 w-100">Search</button>
-                            <button class="btn btn-dark border-0 w-100">Talk To AI</button>
+                            <a href="{{ url_for('srch') }}" class="btn btn-dark border-0 mb-2 w-100">Search</a>
+                            <a href="{{ url_for('aisort') }}" class="btn btn-dark border-0 mb-2 w-100">Talk to AI</a>
+                            <!-- <button class="btn btn-dark border-0 w-100">Talk To AI</button> -->
                         </div>
                     </div>
                 </div>

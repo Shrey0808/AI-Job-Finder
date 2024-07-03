@@ -3,7 +3,7 @@ import re
 
 def clean_salary(salary):
     if pd.isna(salary) or (salary in ["Competitive salary" , "Not disclosed" , "Unpaid",]):
-        return None,None
+        return 0,0
 
     elif "Lacs p.a." in salary:
         clean_salary = re.search(r'Rs (\d+\.\d+) - (\d+\.\d+) Lacs p\.a\.', salary)
@@ -41,24 +41,22 @@ def clean(df):
     salary_lower_range , salary_higher_range = [],[]
     for salary in df['salary']:
         clean = clean_salary(salary)
-        salary_lower_range.append(clean[0])
-        salary_higher_range.append(clean[1])
+        mean_salary = (clean[0]+clean[1])//2
 
     cleaned_tags = [clean_tag(tag) for tag in df['tags']]
 
     cleaned = {
         'title':df['title'],
-        'company':df['company'],
-        'lower_salary':salary_lower_range,
-        'upper_salary':salary_higher_range,
+        'mean_salary':mean_salary,
         'skills':cleaned_tags,
-        'source':df['source']
+        'source':df['source'],
+        'index':df['index']
     }
 
     return pd.DataFrame(cleaned)
 
 
 if __name__ =='__main__':
-    df = pd.read_csv('data.csv')
+    df = pd.read_csv('job.csv')
     cleaned_df = clean(df)
-    cleaned_df.to_csv('cleaned_df.csv', index=False)
+    cleaned_df.to_csv('cleaned_jobs.csv', index=False)
