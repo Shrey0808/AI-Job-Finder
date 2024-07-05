@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from time import sleep, time
 
-PATH = r"C:\Program Files (x86)\chromedriver-win64\chromedriver.exe"
+PATH = r"chromedriver.exe"
 
 def linkedin(job_titles, locations, exp_lvl):
     service = Service(PATH)

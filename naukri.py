@@ -8,7 +8,7 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 import pandas as pd
 import time
 
-PATH = r"C:\Program Files (x86)\chromedriver-win64\chromedriver.exe"
+PATH = r"chromedriver.exe"
 
 def naukri(job_title, location, experience):
     service = Service(PATH)

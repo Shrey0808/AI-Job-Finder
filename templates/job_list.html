@@ -19,6 +19,8 @@
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
     <!-- Libraries Stylesheet -->
     <link href="{{ url_for('static', filename='lib/animate/animate.min.css') }}" rel="stylesheet">
@@ -29,10 +31,56 @@
 
     <!-- Template Stylesheet -->
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <style>
+        
+/* Styles for the floating div */
+#floatingDiv {
+    display: none; /* Initially hidden */
+    position: fixed; /* Fixed position */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust position to be centered */
+    background-color: #f9f9f9; /* Background color */
+    padding: 20px; /* Padding */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow */
+    border-radius: 8px; /* Rounded corners */
+}
+
+/* Styles for the button */
+#showDivButton {
+    display: block;
+    margin: 50px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#goBackButton {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    /* Adjust font size, color, etc. as needed */
+    font-size: 1.5rem;
+    color: #2B3940;
+    cursor: pointer;
+   }
+
+
+.company-logo {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+input::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}
+    </style>
 </head>
 
 <body>
-    <div class="container-xxl bg-white p-0">
+    <div class=" bg-white p-0">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
@@ -40,7 +88,6 @@
             </div>
         </div>
         <!-- Spinner End -->
-
 
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
@@ -58,7 +105,6 @@
         </nav>
         <!-- Navbar End -->
 
-
         <!-- Header End -->
         <div class="container-xxl py-5 bg-dark page-header mb-5">
             <div class="container my-5 pt-5 pb-4">
@@ -66,67 +112,54 @@
             </div>
         </div>
         <!-- Header End -->
-        <form action="">
+
+        <form action="{{ url_for('job_list') }}" method="post" class = "container-xxl" onsubmit="showspinner()">
             <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
                 <div class="container">
                     <div class="row g-2">
-                        <div class="col-md-10">
-                            <div class="row g-2">
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control border-0" placeholder="Job" />
-                                </div>
-                                <div class="col-md-4">
-                                    <select class="form-select border-0">
-                                        <option selected>Experience</option>
-                                        <option value="1">1 Year</option>
-                                        <option value="2">2 Years</option>
-                                        <option value="3">3 Years</option>
-                                        <option value="4">4 Years</option>
-                                        <option value="5">5 Years</option>
-                                        <option value="6">6 Years</option>
-                                        <option value="7">7 Years</option>
-                                        <option value="8">8 Years</option>
-                                        <option value="9">9 Years</option>
-                                        <option value="10">10 Years</option>
-                                        <option value="11">11 Years</option>
-                                        <option value="12">12 Years</option>
-                                        <option value="13">13 Years</option>
-                                        <option value="14">14 Years</option>
-                                        <option value="15">15 Years</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <select class="form-select border-0">
-                                        <option selected>Location</option>
-                                        <option value="1">Location 1</option>
-                                        <option value="2">Location 2</option>
-                                        <option value="3">Location 3</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <select class="form-select border-0">
-                                        <option selected>Portals</option>
-                                        <option value="1">All</option>
-                                        <option value="2">Naukri</option>
-                                        <option value="3">Internshala</option>
-                                        <option value="4">LinkedIn</option>
-                                        <option value="5">Timesjob</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2 d-flex flex-column">
-                            <a href="{{ url_for('srch') }}" class="btn btn-dark border-0 mb-2 w-100">Search</a>
-                            <a href="{{ url_for('aisort') }}" class="btn btn-dark border-0 mb-2 w-100">Talk to AI</a>
-                            <!-- <button class="btn btn-dark border-0 w-100">Talk To AI</button> -->
-                        </div>
+                      <div class="col-md-4">
+                        <input type="text" class="form-control border-0" placeholder="Jobs" name="job" required>
+                      </div>
+                      <div class="col-md-4">
+                        <select class="form-select border-0" name="experience" required>
+                          <option selected>Experience</option>
+                          <option value="1">1 Year</option>
+                          <option value="2">2 Years</option>
+                          <option value="3">3 Years</option>
+                          <option value="4">4 Years</option>
+                          <option value="5">5 Years</option>
+                          <option value="6">6 Years</option>
+                          <option value="7">7 Years</option>
+                          <option value="8">8 Years</option>
+                          <option value="9">9 Years</option>
+                          <option value="10">10 Years</option>
+                          <option value="11">11 Years</option>
+                          <option value="12">12 Years</option>
+                          <option value="13">13 Years</option>
+                          <option value="14">14 Years</option>
+                          <option value="15">15 Years</option>
+                        </select>
+                      </div>
+                      <div class="col-md-4">
+                        <input type="text" class="form-control border-0" placeholder="Location" name="location" required>
+                      </div>
                     </div>
+                    <div class="row g-2 mt-3">
+                      <div class="col-md-4">
+                        <input type="text" class="form-control border-0" name="skillsInput" placeholder="Enter your skills" required>
+                      </div>
+                      <div class="col-md-4">
+                        <input type="number" class="form-control border-0" name="salaryInput" placeholder="Enter your expected salary" required>
+                      </div>
+                      <div class="col-md-4">
+                        <button class="btn btn-dark border-0 mb-2 w-100" >Search</button>
+                      </div>
+                    </div>
+                  </div>
+                 </div>
                 </div>
             </div>
-
-        </form>
-
-        
+        </form>   
 
         <!-- Jobs Start -->
         <div class="container-xxl py-5">
@@ -136,17 +169,46 @@
                     <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
                         <li class="nav-item">
                             <a class="d-flex align-items-center text-start mx-3 ms-0 pb-3 active" data-bs-toggle="pill" href="#tab-1">
-                                <h6 class="mt-n1 mb-0">Featured</h6>
+                                <h6 class="mt-n1 mb-0">{{ total_jobs }} Jobs Found</h6>
                             </a>
                         </li>
                     </ul>
-                    <div class="tab-content">
+                    <div class="d-flex justify-content-between">
+                        <div class="col-md-4" style="margin-bottom: 30px; margin-top: -85px ; width:20%">   
+                            <form action="{{ url_for('portal') }}" method="post">
+                          <select class="form-select border-0" name="jobportal" au>
+                            <option selected >Portals</option>
+                            <option value="1">Naukri</option>
+                            <option value="2">Internshala</option>
+                            <option value="3">LinkedIn</option>
+                            <option value="4">Timesjob</option>
+                            
+                          </select>
+                          <button type="submit">portal_submit</button>
+                        </form>
+                        </div>
+                        <div class="col-md-2 d-flex flex-column" style="margin-bottom: 30px; margin-top: -85px;">
+                          <button id = "talktoai" class="btn btn-dark border-0 w-100">Automatic Sorter</button>
+                        </div>
+                      </div>
+                      <div class="tab-content">
+                        {% if data_fetched ==false %}
+                        <script>
+                                document.getElementById("spinner").classList.remove("show")
+                        </script>
+                        {% endif %}
                         {% for key in jobs['title'].keys() %}
                         <div class="job-item p-4 mb-4">
                             <div class="row g-4">
-                                <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                <div class="col-sm-12 col-md-8 d-flex align-items-center me-auto">
+                                    <img class="flex-shrink-0 img-fluid border rounded" 
+                                         src="static/img/{{ jobs['source'][key] }}.png" 
+                                         onerror="this.onerror=null; this.src='img/default.png';" 
+                                         alt="{{ jobs['source'][key] }}" 
+                                         style="width: 80px; height: 80px;">
                                     <div class="text-start ps-4">
-                                        <h5 class="mb-3">{{ jobs['title'][key] }}</h5>
+                                        <h4 class="mb-3"><b>{{ jobs['title'][key] }}</b></h4>
+                                        <h6 class="mb-3">{{ jobs['company'][key] }}</h6>
                                         <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ jobs['location'][key] }}</span>
                                         <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>{{ jobs['experience'][key] }}</span>
                                         <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>{{ jobs['salary'][key] }}</span>
@@ -160,7 +222,7 @@
                             </div>
                         </div>
                         {% endfor %}
-
+                    </div>                    
                         <nav aria-label="Page navigation">
                             <ul class="pagination justify-content-center">
                                 {% if page > 1 %}
@@ -188,8 +250,45 @@
                 </div>
             </div>
         </div>
-
+        <!-- Floating div Start -->
+        <div class="container-fluid bg-primary mb-5 wow fadeIn" id="floatingDiv" style="width:50%">
+            <h2>Sorter</h2>
+            <p>Enter the number of jobs you want:</p>
+            <form action="{{ url_for('aisubmit') }}" method="post" onsubmit="showspinner()">
+            <input type="number" class="form-control border-0" name="no_jobs"  id="numberOfJobs" placeholder="Enter the number of jobs">
+            
+            <br>
+            <!-- <div class="row"> -->
+                <div class="col">
+                    <button type="submit" class="btn btn-dark border-0 mb-2 w-100" id="submitButton" required >Submit</button>
+                </div>
+                </form>
+                <div class="col">
+                    <button class="btn border-0 mb-2" id="goBackButton">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Floating div END -->
         <!-- Jobs End -->
+
+        <!-- Footer Start -->
+        <footer class="bg-dark text-center text-white py-4">
+            <div class="container">
+                <p>&copy; 2024 JobEntry. All Rights Reserved.</p>
+                <p>Follow us on</p>
+                <div>
+                    <a href="https://github.com/B-Rohan-Rao" class="text-white me-4" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/b-rohan-rao-463a7926b/" class="text-white" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+        </footer>
+        <!-- Footer End -->
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -201,6 +300,62 @@
 
     <!-- Template Javascript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename='js/floatingdivjs') }}"></script> -->
+   
+
+    
+<script>
+
+document.getElementById('talktoai').addEventListener('click', function(event) {
+      // Your button click logic here
+      event.preventDefault(); // Prevent default form submission
+    });
+
+
+    document.getElementById('talktoai').addEventListener('click', function () {
+    var floatingDiv = document.getElementById('floatingDiv');
+    floatingDiv.style.display = 'block';
+
+    // Add click event listener for submit button
+    document.getElementById('submitButton').addEventListener('click', function () {
+        var numberOfJobs = document.getElementById('numberOfJobs').value;
+
+        // Process the user input (numberOfJobs) here
+        // (e.g., send to server, display a message)
+        console.log("Number of Jobs:", numberOfJobs);
+
+        // Hide the floating div after processing user input
+        floatingDiv.style.display = 'none';
+    });
+});
+
+// Get references to the buttons
+const goBackButton = document.getElementById("goBackButton");
+const floatingDiv = document.getElementById("floatingDiv");
+
+// Add click event listener to the "Go Back" button
+goBackButton.addEventListener("click", function () {
+    // Hide the floating div
+    floatingDiv.style.display = "none";
+});
+
+const form = document.querySelector('form');
+form.addEventListener('submit', () => {
+  const spinner = document.getElementById('spinner');
+  spinner.style.display = 'block';
+});
+
+let show = false;
+function showspinner(){
+    if(show == false){
+        show = true;
+    }
+    document.getElementById("spinner").classList.add("show")
+}
+
+</script>
+
+        
 </body>
 
 </html>

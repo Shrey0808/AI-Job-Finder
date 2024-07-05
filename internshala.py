@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException, NoSuchElementException, StaleElementReferenceException
 from selenium.webdriver.common.by import By
 
-PATH = r"C:\Program Files (x86)\chromedriver-win64\chromedriver.exe"
+PATH = r"chromedriver.exe"
 
 import time
     
