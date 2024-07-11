@@ -6,15 +6,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.support.ui import Select
-from selenium.webdriver.chrome.options import Options
 import time
 
 PATH = r"chromedriver.exe"
 
 def timesjob(job_title, location, exp):
-    # chrome_options = Options()
-    # chrome_options.add_argument("--headless")  # Ensure GUI is off
-
     service = Service(PATH)
     driver = webdriver.Chrome(service=service)
 
